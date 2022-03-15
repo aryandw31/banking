@@ -1,2 +1,2 @@
 # banking
-a banking project
+a mini banking project
