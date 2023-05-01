@@ -1,0 +1,25 @@
+connect sys/sys as sysdba;
+create user banking identified by banking;
+grant all privilege to banking;
+connect banking/banking;
+create table login
+(
+ID varchar2(50) Primary key,
+Pwd varchar2(50)
+);
+
+create Table CustDetail
+(
+Name varchar2(35),
+FName varchar2(35),
+DOB date,
+Sex char(1),
+Mobile number(19),
+Aadhar Varchar2(3),
+PAN varchar2(3),
+VoterID varchar2(3),
+AccType varchar2(10),
+OpeningAmt number(14,2),
+AccNo number(19) Primary key,
+balance number(14,2)
+);

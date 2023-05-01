@@ -306,8 +306,8 @@ public class Transaction extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try
         {
-            Class.forName("java.sql.Driver");
-            Connection con=DriverManager.getConnection("jdbc:mysql://localhost/banking","root","root");
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","banking","banking");
             Statement st=con.createStatement();
             ResultSet rs=st.executeQuery("select * from custdetail");
             int a=0;
@@ -331,6 +331,8 @@ public class Transaction extends javax.swing.JFrame {
                         if(z>=500)
                         {
                             st.executeUpdate("Update custdetail set balance="+z+"where accno="+accno);
+                            jLabel7.setVisible(false);
+                            jLabel8.setVisible(false);
                             JOptionPane.showMessageDialog(null,"Transaction Successful!");
                         }
                         else

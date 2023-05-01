@@ -1,8 +1,9 @@
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+//import java.sql.Connection;
+//import java.sql.DriverManager;
+//import java.sql.ResultSet;
+//import java.sql.Statement;
+import java.sql.*;
 import javax.swing.JOptionPane;
 /*
  * To change this template, choose Tools | Templates
@@ -190,8 +191,9 @@ public class Login extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try
         {
-            Class.forName("java.sql.Driver");
-            Connection con=DriverManager.getConnection("jdbc:mysql://localhost/banking","root","root");
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            //Class.forName("com.mysql.jdbc.Driver");
+            Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","banking","banking");
             Statement st=con.createStatement();
             ResultSet rs=st.executeQuery("Select * from login");
             String s=t1.getText();

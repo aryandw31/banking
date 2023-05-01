@@ -193,8 +193,8 @@ public class SignUp extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
          try
         {
-            Class.forName("java.sql.Driver");
-            Connection con=DriverManager.getConnection("jdbc:mysql://localhost/banking","root","root");
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","banking","banking");
             Statement st=con.createStatement();
             String id=t1.getText();
             char[] a=p1.getPassword();
@@ -220,6 +220,9 @@ public class SignUp extends javax.swing.JFrame {
                 {
                     st.executeUpdate("insert into login values('"+id+"','"+s1+"')");
                     JOptionPane.showMessageDialog(null,"ID Created Successfully!");
+                    dispose();
+                    Login ob = new Login();
+                    ob.setVisible(true);
                 }
                 else
                     JOptionPane.showMessageDialog(null,"Both Passwords do not match.");
