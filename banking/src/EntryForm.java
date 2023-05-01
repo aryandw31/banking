@@ -471,9 +471,10 @@ public class EntryForm extends javax.swing.JFrame {
         int y=Integer.parseInt((String)cb1.getSelectedItem());
         int m=Integer.parseInt((String)cb2.getSelectedItem());
         int d=Integer.parseInt((String)cb3.getSelectedItem());
-        String date=(String)(cb1.getSelectedItem()+"-"+cb2.getSelectedItem()+"-"+cb3.getSelectedItem());
+        String date=(String)(cb1.getSelectedItem()+"/"+cb2.getSelectedItem()+"/"+cb3.getSelectedItem());
+        System.out.println(date);
         char sex = 0;
-        String ad1="No",ad2="no",ad3="No";
+        String ad1="No",ad2="No",ad3="No";
         if(r1.isSelected())
             sex='M';
         else if(r2.isSelected())
@@ -489,21 +490,30 @@ public class EntryForm extends javax.swing.JFrame {
             jLabel22.setVisible(true);
             b=1;
         }
+        else{
+            jLabel22.setVisible(false);
+        }
         try
         {
-            Class.forName("java.sql.Driver");
-            Connection con=DriverManager.getConnection("jdbc:mysql://localhost/banking","root","root");
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","banking","banking");
             Statement st=con.createStatement();
-            ResultSet rs=st.executeQuery("Select * from custdetail;");
+            ResultSet rs=st.executeQuery("Select * from custdetail");
             if(amt<500)
             {
                 jLabel17.setVisible(true);
                 b=1;
             }
+            else{
+                jLabel17.setVisible(false);
+            }
             if(t5.getText().length()!=12)
             {
                 jLabel18.setVisible(true);
                 b=1;
+            }
+            else{
+                jLabel18.setVisible(false);
             }
             while(b==0&&rs.next())
             {
@@ -516,7 +526,8 @@ public class EntryForm extends javax.swing.JFrame {
             }
             if(b==0)
             {
-                st.executeUpdate("insert into custdetail values('"+name+"','"+fname+"','"+date+"','"+sex+"',"+mbno+",'"+ad1+"','"+ad2+"','"+ad3+"','"+actype+"',"+amt+","+acno+","+amt+");");
+                String str = "insert into custdetail values('"+name+"','"+fname+"', to_date('"+date+"', 'YYYY/MM/DD'),'"+sex+"',"+mbno+",'"+ad1+"','"+ad2+"','"+ad3+"','"+actype+"',"+amt+","+acno+","+amt+")";
+                st.executeUpdate(str);
                 JOptionPane.showMessageDialog(null,"Account Created Successfully!");
             }
             con.close();
@@ -525,6 +536,7 @@ public class EntryForm extends javax.swing.JFrame {
         }
         catch(Exception e)
         {
+            String sqt = "insert into custdetail values('"+name+"','"+fname+"', to_date('"+date+"', 'YYYY/MM/DD'),'"+sex+"',"+mbno+",'"+ad1+"','"+ad2+"','"+ad3+"','"+actype+"',"+amt+","+acno+","+amt+");";
             System.out.println(e);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
